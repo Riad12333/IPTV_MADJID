@@ -1,65 +1,200 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Tv, Play, Globe, Smartphone, Sun, AlertTriangle } from 'lucide-react';
+import Footer from '@/components/Footer';
+
+export default function LandingPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const handleEnter = () => {
+    setLoading(true);
+    // Simulate loading progress
+    let currentProgress = 0;
+    const interval = setInterval(() => {
+      currentProgress += Math.random() * 15;
+      if (currentProgress > 100) {
+        currentProgress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          router.push('/player');
+        }, 500);
+      }
+      setProgress(currentProgress);
+    }, 200);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0f0c29] flex flex-col items-center justify-center text-white relative overflow-hidden font-sans">
+        {/* Background glow effects */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px] animate-pulse" />
+
+        <div className="z-10 flex flex-col items-center gap-8 relative">
+          <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.4)] mb-2 animate-bounce-slow">
+            <Play className="w-14 h-14 text-white fill-current ml-1" />
+          </div>
+
+          <div className="text-center space-y-3">
+            <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+              IPTVMADJID
+            </h1>
+            <p className="text-blue-200/60 text-sm animate-pulse font-medium tracking-wide">Chargement des chaînes...</p>
+          </div>
+
+          <div className="w-96 h-2 bg-white/5 rounded-full overflow-hidden mt-6 ring-1 ring-white/10">
+            <div
+              className="h-full bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-full transition-all duration-200 ease-out shadow-[0_0_20px_rgba(234,88,12,0.5)]"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="text-sm font-mono text-blue-300/80">
+            {Math.round(progress)}%
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-[#0f0c29] text-white flex flex-col font-sans selection:bg-orange-500/30 overflow-x-hidden">
+
+      {/* Animated Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1c4b] via-[#101135] to-[#0a0a1f]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/30 via-transparent to-transparent opacity-50" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] animate-pulse-slow delay-1000" />
+      </div>
+
+      {/* Top Navigation */}
+      <nav className="p-6 flex justify-end gap-4 relative z-20">
+        <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm group">
+          <Sun className="w-5 h-5 text-yellow-500/80 group-hover:text-yellow-400 transition-colors" />
+        </button>
+        <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm group">
+          <Globe className="w-5 h-5 text-blue-400/80 group-hover:text-blue-300 transition-colors" />
+        </button>
+      </nav>
+
+      {/* Main Hero */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10 relative z-10 w-full max-w-7xl mx-auto">
+
+        {/* Logo */}
+        <div className="mb-10 relative group perspective-1000">
+          <div className="absolute inset-0 bg-orange-600/30 blur-3xl rounded-full group-hover:bg-orange-600/50 transition-all duration-700 opacity-60 group-hover:opacity-100" />
+          <div className="w-32 h-32 rounded-[2rem] bg-[#0f0c29] border border-white/10 flex flex-col items-center justify-center relative z-10 shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="w-20 h-20 bg-gradient-to-tr from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:shadow-orange-500/50 transition-all duration-300">
+              <Play className="w-10 h-10 text-white fill-current ml-1" />
+            </div>
+          </div>
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-20 h-2 bg-black/50 blur-lg rounded-full" />
+        </div>
+
+        {/* Title */}
+        <div className="text-center space-y-5 mb-20 relative z-10 max-w-3xl px-4">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+            Bienvenue sur <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600 drop-shadow-sm">IPTVMADJID</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-blue-100/70 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+            L'expérience de streaming ultime. Accédez à vos contenus préférés en haute définition, partout dans le monde.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Grid Features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-20 px-4">
+          <FeatureCard
+            icon={<Tv className="w-9 h-9 text-orange-400" />}
+            title="Chaînes TV"
+            desc="Plus de 10 000 chaînes en direct du monde entier."
+          />
+          <FeatureCard
+            icon={<Play className="w-9 h-9 text-red-500" />}
+            title="Streaming HD"
+            desc="Qualité 4K et Full HD sans mise en mémoire tampon."
+          />
+          <FeatureCard
+            icon={<Globe className="w-9 h-9 text-blue-500" />}
+            title="Multi-langues"
+            desc="Contenus disponibles en FR, EN, AR, ES et plus."
+          />
+          <FeatureCard
+            icon={<Smartphone className="w-9 h-9 text-yellow-500" />}
+            title="Multi-appareils"
+            desc="Compatible Smart TV, Android, iOS et PC."
+          />
+        </div>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-16 px-4">
+          <StatCard number="+350" label="Sports" color="from-orange-400 to-orange-600" />
+          <StatCard number="+600" label="Divertissement" color="from-pink-400 to-pink-600" />
+          <StatCard number="TNT" label="Chaînes France" color="from-blue-400 to-blue-600" />
+          <StatCard number="VO" label="Internationale" color="from-purple-400 to-purple-600" />
+        </div>
+
+        {/* CTA Button */}
+        <div className="relative group mb-20">
+          <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          <button
+            onClick={handleEnter}
+            className="relative px-10 py-5 bg-gradient-to-r from-orange-500 to-red-600 rounded-full leading-none flex items-center gap-4 shadow-2xl shadow-orange-900/20 transform transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] ring-1 ring-white/20"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <span className="font-bold text-xl text-white tracking-wide">Accéder à l'interface IPTV</span>
+            <span className="bg-white/20 p-2 rounded-full backdrop-blur-sm group-hover:bg-white/30 transition-colors">
+              <Play className="w-5 h-5 fill-current text-white" />
+            </span>
+          </button>
+        </div>
+
+        {/* Warning Box */}
+        <div className="max-w-2xl w-full bg-[#131538]/60 border border-white/5 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-white/10 transition-colors">
+          <div className="absolute top-0 left-0 w-2 h-full bg-yellow-500/50" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
+            <div className="flex-shrink-0 bg-yellow-500/10 p-3 rounded-xl text-yellow-500">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-yellow-400 font-bold text-base mb-1">Avertissement Important</h3>
+              <p className="text-sm text-blue-200/50 leading-relaxed font-light">
+                Cette application est un lecteur multimédia. Nous fournissons uniquement l'interface technique. Les flux proviennent de sources publiques tierces (IPTV-Org).
+              </p>
+            </div>
+          </div>
         </div>
       </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+function FeatureCard({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) {
+  return (
+    <div className="bg-[#1a1c4b]/40 backdrop-blur-sm border border-white/5 p-8 rounded-[2rem] hover:bg-[#1a1c4b]/80 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group flex flex-col items-center text-center relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="mb-6 p-4 rounded-2xl bg-white/5 ring-1 ring-white/10 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300">
+        {icon}
+      </div>
+      <h3 className="text-xl font-bold mb-3 text-gray-100 group-hover:text-white transition-colors">{title}</h3>
+      <p className="text-sm text-blue-200/50 leading-relaxed font-light group-hover:text-blue-200/70 transition-colors">{desc}</p>
+    </div>
+  );
+}
+
+function StatCard({ number, label, color }: { number: string, label: string, color: string }) {
+  return (
+    <div className="bg-[#1a1c4b]/40 backdrop-blur-sm p-6 rounded-2xl text-center border border-white/5 hover:border-white/10 transition-all duration-300 hover:bg-[#1a1c4b]/60">
+      <div className={`text-3xl lg:text-4xl font-black bg-clip-text text-transparent bg-gradient-to-br ${color} mb-2 tracking-tight`}>
+        {number}
+      </div>
+      <div className="text-[10px] md:text-xs text-blue-300/40 font-bold uppercase tracking-widest">
+        {label}
+      </div>
     </div>
   );
 }
