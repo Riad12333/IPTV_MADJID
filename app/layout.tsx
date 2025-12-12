@@ -31,6 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
+        <noscript>
+          <div style={{ padding: '20px', color: 'white', backgroundColor: 'red', textAlign: 'center' }}>
+            JavaScript est requis pour utiliser cette application sur votre TV. Veuillez activer JavaScript dans les paramètres.
+          </div>
+        </noscript>
         {children}
       </body>
     </html>

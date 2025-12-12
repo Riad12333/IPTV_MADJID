@@ -1,94 +1,32 @@
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Tv, Play, Globe, Smartphone, Sun, AlertTriangle } from 'lucide-react';
+import React from 'react';
+import Link from 'next/link';
+import { Tv, Play, Globe, Smartphone, AlertTriangle } from 'lucide-react';
 import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 
 export default function LandingPage() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  const handleEnter = () => {
-    setLoading(true);
-    // Simulate loading progress
-    let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += Math.random() * 15;
-      if (currentProgress > 100) {
-        currentProgress = 100;
-        clearInterval(interval);
-        setTimeout(() => {
-          router.push('/player');
-        }, 500);
-      }
-      setProgress(currentProgress);
-    }, 200);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0f0c29] flex flex-col items-center justify-center text-white relative overflow-hidden font-sans">
-        {/* Background glow effects */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px] animate-pulse" />
-
-        <div className="z-10 flex flex-col items-center gap-8 relative">
-          <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.4)] mb-2 animate-bounce-slow">
-            <Play className="w-14 h-14 text-white fill-current ml-1" />
-          </div>
-
-          <div className="text-center space-y-3">
-            <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
-              IPTVMADJID
-            </h1>
-            <p className="text-blue-200/60 text-sm animate-pulse font-medium tracking-wide">Chargement des chaînes...</p>
-          </div>
-
-          <div className="w-96 h-2 bg-white/5 rounded-full overflow-hidden mt-6 ring-1 ring-white/10">
-            <div
-              className="h-full bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-full transition-all duration-200 ease-out shadow-[0_0_20px_rgba(234,88,12,0.5)]"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="text-sm font-mono text-blue-300/80">
-            {Math.round(progress)}%
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#0f0c29] text-white flex flex-col font-sans selection:bg-orange-500/30 overflow-x-hidden">
 
       {/* Animated Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1c4b] via-[#101135] to-[#0a0a1f]" />
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/30 via-transparent to-transparent opacity-50" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] animate-pulse-slow" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] animate-pulse-slow delay-1000" />
       </div>
 
-      {/* Top Navigation */}
-      <nav className="p-6 flex justify-end gap-4 relative z-20">
-        <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm group">
-          <Sun className="w-5 h-5 text-yellow-500/80 group-hover:text-yellow-400 transition-colors" />
-        </button>
-        <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm group">
-          <Globe className="w-5 h-5 text-blue-400/80 group-hover:text-blue-300 transition-colors" />
-        </button>
-      </nav>
+      <Navbar />
 
       {/* Main Hero */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10 relative z-10 w-full max-w-7xl mx-auto">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 md:-mt-10 relative z-10 w-full max-w-7xl mx-auto pt-20">
 
         {/* Logo */}
         <div className="mb-6 md:mb-10 relative group perspective-1000">
-          <div className="absolute inset-0 bg-orange-600/30 blur-3xl rounded-full group-hover:bg-orange-600/50 transition-all duration-700 opacity-60 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-orange-600/30 blur-3xl rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
           <div className="w-32 h-32 rounded-[2rem] bg-[#0f0c29] border border-white/10 flex flex-col items-center justify-center relative z-10 shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="w-20 h-20 bg-gradient-to-tr from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:shadow-orange-500/50 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent opacity-100" />
+            <div className="w-20 h-20 bg-gradient-to-tr from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg shadow-orange-500/20">
               <Play className="w-10 h-10 text-white fill-current ml-1" />
             </div>
           </div>
@@ -140,15 +78,15 @@ export default function LandingPage() {
         {/* CTA Button */}
         <div className="relative group mb-20">
           <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-          <button
-            onClick={handleEnter}
+          <Link
+            href="/player"
             className="relative px-10 py-5 bg-gradient-to-r from-orange-500 to-red-600 rounded-full leading-none flex items-center gap-4 shadow-2xl shadow-orange-900/20 transform transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] ring-1 ring-white/20"
           >
             <span className="font-bold text-xl text-white tracking-wide">Accéder à l'interface IPTV</span>
             <span className="bg-white/20 p-2 rounded-full backdrop-blur-sm group-hover:bg-white/30 transition-colors">
               <Play className="w-5 h-5 fill-current text-white" />
             </span>
-          </button>
+          </Link>
         </div>
 
         {/* Warning Box */}
