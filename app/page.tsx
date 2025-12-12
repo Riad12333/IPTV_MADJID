@@ -84,7 +84,7 @@ export default function LandingPage() {
       <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10 relative z-10 w-full max-w-7xl mx-auto">
 
         {/* Logo */}
-        <div className="mb-10 relative group perspective-1000">
+        <div className="mb-6 md:mb-10 relative group perspective-1000">
           <div className="absolute inset-0 bg-orange-600/30 blur-3xl rounded-full group-hover:bg-orange-600/50 transition-all duration-700 opacity-60 group-hover:opacity-100" />
           <div className="w-32 h-32 rounded-[2rem] bg-[#0f0c29] border border-white/10 flex flex-col items-center justify-center relative z-10 shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -96,17 +96,17 @@ export default function LandingPage() {
         </div>
 
         {/* Title */}
-        <div className="text-center space-y-5 mb-20 relative z-10 max-w-3xl px-4">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+        <div className="text-center space-y-3 md:space-y-5 mb-10 md:mb-20 relative z-10 max-w-3xl px-4">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
             Bienvenue sur <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600 drop-shadow-sm">IPTVMADJID</span>
           </h1>
-          <p className="text-blue-100/70 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+          <p className="text-blue-100/70 text-base sm:text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
             L'expérience de streaming ultime. Accédez à vos contenus préférés en haute définition, partout dans le monde.
           </p>
         </div>
 
         {/* Grid Features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-20 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full mb-20 px-4">
           <FeatureCard
             icon={<Tv className="w-9 h-9 text-orange-400" />}
             title="Chaînes TV"
@@ -130,7 +130,7 @@ export default function LandingPage() {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-16 px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mb-16 px-4">
           <StatCard number="+350" label="Sports" color="from-orange-400 to-orange-600" />
           <StatCard number="+600" label="Divertissement" color="from-pink-400 to-pink-600" />
           <StatCard number="TNT" label="Chaînes France" color="from-blue-400 to-blue-600" />
@@ -175,7 +175,7 @@ export default function LandingPage() {
 
 function FeatureCard({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) {
   return (
-    <div className="bg-[#1a1c4b]/40 backdrop-blur-sm border border-white/5 p-8 rounded-[2rem] hover:bg-[#1a1c4b]/80 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group flex flex-col items-center text-center relative overflow-hidden">
+    <div className="bg-[#1a1c4b]/40 backdrop-blur-sm border border-white/5 p-6 md:p-8 rounded-[2rem] hover:bg-[#1a1c4b]/80 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group flex flex-col items-center text-center relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       <div className="mb-6 p-4 rounded-2xl bg-white/5 ring-1 ring-white/10 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300">
         {icon}
