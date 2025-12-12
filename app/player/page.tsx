@@ -36,6 +36,19 @@ export default function PlayerPage() {
         loadPlaylist(playlistUrl);
     }, [playlistUrl]);
 
+    // Close sidebar on mobile on initial load
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsSidebarOpen(false);
+        }
+    }, []);
+
+    const closeMobileSidebar = () => {
+        if (window.innerWidth < 768) {
+            setIsSidebarOpen(false);
+        }
+    };
+
     const loadPlaylist = async (urlOrUrls: string | string[]) => {
         setLoading(true);
         setSelectedChannel(null); // Reset player
@@ -110,6 +123,7 @@ export default function PlayerPage() {
             setCustomUrl('');
             setCustomName('');
             setShowCustomUrlInput(false);
+            closeMobileSidebar();
         }
     };
 
@@ -136,6 +150,14 @@ export default function PlayerPage() {
     return (
         <div className="flex h-screen bg-[#0f0c29] text-gray-100 overflow-hidden font-sans">
 
+            {/* Mobile Overlay */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/80 z-10 md:hidden backdrop-blur-sm"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
             <aside className={`
                 ${isSidebarOpen ? 'w-64' : 'w-0'} 
@@ -154,7 +176,7 @@ export default function PlayerPage() {
 
                     {/* Main Nav */}
                     <div className="space-y-1">
-                        <button onClick={() => { setSelectedGroup('All'); setSearchQuery(''); }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${selectedGroup === 'All' && searchQuery === '' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-[#1e204a]'}`}>
+                        <button onClick={() => { setSelectedGroup('All'); setSearchQuery(''); closeMobileSidebar(); }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${selectedGroup === 'All' && searchQuery === '' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-[#1e204a]'}`}>
                             <Home className="w-5 h-5" />
                             <span className="text-sm font-medium">Toutes les chaînes</span>
                         </button>
@@ -168,7 +190,7 @@ export default function PlayerPage() {
                                 {savedPlaylists.map((playlist, idx) => (
                                     <div key={idx} className="group flex items-center gap-1">
                                         <button
-                                            onClick={() => { setPlaylistUrl(playlist.url); setSearchQuery(''); }}
+                                            onClick={() => { setPlaylistUrl(playlist.url); setSearchQuery(''); closeMobileSidebar(); }}
                                             className={`flex-1 flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left overflow-hidden ${playlistUrl === playlist.url ? 'bg-[#1e204a] text-green-400 border-r-2 border-green-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                                         >
                                             <ListIcon className="w-3 h-3 flex-shrink-0" />
@@ -206,6 +228,7 @@ export default function PlayerPage() {
                                         'https://raw.githubusercontent.com/hemzaberkane/ARAB-IPTV/main/ARABIPTV.m3u'
                                     ]);
                                     setSearchQuery('bein');
+                                    closeMobileSidebar();
                                 }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${Array.isArray(playlistUrl) && searchQuery === 'bein' ? 'bg-[#1e204a] text-purple-400 border-r-2 border-purple-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
@@ -213,35 +236,35 @@ export default function PlayerPage() {
                                 <span className="text-sm">Bein Sports (All)</span>
                             </button>
                             <button
-                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/sports.m3u'); setSearchQuery(''); }}
+                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/sports.m3u'); setSearchQuery(''); closeMobileSidebar(); }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === 'https://iptv-org.github.io/iptv/categories/sports.m3u' && searchQuery === '' ? 'bg-[#1e204a] text-orange-400 border-r-2 border-orange-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
                                 <span className="text-lg">🏆</span>
                                 <span className="text-sm">Sports Global</span>
                             </button>
                             <button
-                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/football.m3u'); setSearchQuery(''); }}
+                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/football.m3u'); setSearchQuery(''); closeMobileSidebar(); }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === 'https://iptv-org.github.io/iptv/categories/football.m3u' ? 'bg-[#1e204a] text-orange-400 border-r-2 border-orange-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
                                 <span className="text-lg">⚽</span>
                                 <span className="text-sm">Football</span>
                             </button>
                             <button
-                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/auto.m3u'); setSearchQuery(''); }}
+                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/auto.m3u'); setSearchQuery(''); closeMobileSidebar(); }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === 'https://iptv-org.github.io/iptv/categories/auto.m3u' ? 'bg-[#1e204a] text-orange-400 border-r-2 border-orange-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
                                 <span className="text-lg">🏎️</span>
                                 <span className="text-sm">Auto/Moto</span>
                             </button>
                             <button
-                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/fight.m3u'); setSearchQuery(''); }}
+                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/fight.m3u'); setSearchQuery(''); closeMobileSidebar(); }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === 'https://iptv-org.github.io/iptv/categories/fight.m3u' ? 'bg-[#1e204a] text-orange-400 border-r-2 border-orange-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
                                 <span className="text-lg">🥊</span>
                                 <span className="text-sm">Sports Combat</span>
                             </button>
                             <button
-                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/extreme_sports.m3u'); setSearchQuery(''); }}
+                                onClick={() => { setPlaylistUrl('https://iptv-org.github.io/iptv/categories/extreme_sports.m3u'); setSearchQuery(''); closeMobileSidebar(); }}
                                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === 'https://iptv-org.github.io/iptv/categories/extreme_sports.m3u' ? 'bg-[#1e204a] text-orange-400 border-r-2 border-orange-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                             >
                                 <span className="text-lg">🛹</span>
@@ -292,7 +315,7 @@ export default function PlayerPage() {
                             {PRESETS.map(p => (
                                 <button
                                     key={p.name}
-                                    onClick={() => { setPlaylistUrl(p.url); setSearchQuery(''); }}
+                                    onClick={() => { setPlaylistUrl(p.url); setSearchQuery(''); closeMobileSidebar(); }}
                                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${playlistUrl === p.url ? 'bg-[#1e204a] text-blue-400 border-r-2 border-blue-400' : 'text-gray-400 hover:bg-[#1e204a]'}`}
                                 >
                                     <Globe className="w-3 h-3" />
@@ -312,7 +335,7 @@ export default function PlayerPage() {
                             {playlist.groups.map(g => (
                                 <button
                                     key={g}
-                                    onClick={() => setSelectedGroup(g)}
+                                    onClick={() => { setSelectedGroup(g); closeMobileSidebar(); }}
                                     className={`w-full text-left px-3 py-1.5 text-xs rounded flex items-center justify-between group ${selectedGroup === g ? 'text-blue-400 bg-[#1e204a]' : 'text-gray-400 hover:text-white'}`}
                                 >
                                     <span className="truncate">{g}</span>
